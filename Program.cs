@@ -1,35 +1,28 @@
-using Application = Avalonia.Application;
-using AppBuilder = Avalonia.AppBuilder;
-using AppBuilderDesktopExtensions = Avalonia.AppBuilderDesktopExtensions;
-using ClassicDesktopStyleApplicationLifetimeExtensions = Avalonia.ClassicDesktopStyleApplicationLifetimeExtensions;
-using IClassicDesktopStyleApplicationLifetime = Avalonia.Controls.ApplicationLifetimes.IClassicDesktopStyleApplicationLifetime;
-using Window = Avalonia.Controls.Window;
-using TextBlock = Avalonia.Controls.TextBlock;
-using HorizontalAlignment = Avalonia.Layout.HorizontalAlignment;
-using VerticalAlignment = Avalonia.Layout.VerticalAlignment;
-using FluentTheme = Avalonia.Themes.Fluent.FluentTheme;
+using Av = Avalonia;
+using AvControls = Avalonia.Controls;
+using IAvApplicationLifetime = Avalonia.Controls.ApplicationLifetimes.IClassicDesktopStyleApplicationLifetime;
 
 namespace Uranus;
 
-class App : Application
+class App : Av.Application
 {
-    public override void Initialize() => Styles.Add(new FluentTheme());
+    public override void Initialize() => Styles.Add(new Av.Themes.Fluent.FluentTheme());
 
     public override void OnFrameworkInitializationCompleted()
     {
-        if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+        if (ApplicationLifetime is IAvApplicationLifetime desktop)
         {
-            desktop.MainWindow = new Window
+            desktop.MainWindow = new AvControls.Window
             {
                 Title = "Uranus",
                 Width = 400,
                 Height = 250,
-                Content = new TextBlock
+                Content = new AvControls.TextBlock
                 {
                     Text = "Hello, World!",
                     FontSize = 28,
-                    HorizontalAlignment = HorizontalAlignment.Center,
-                    VerticalAlignment = VerticalAlignment.Center,
+                    HorizontalAlignment = Av.Layout.HorizontalAlignment.Center,
+                    VerticalAlignment = Av.Layout.VerticalAlignment.Center,
                 },
             };
         }
@@ -41,7 +34,7 @@ class Program
 {
     static void Main(string[] args)
     {
-        var builder = AppBuilderDesktopExtensions.UsePlatformDetect(AppBuilder.Configure<App>());
-        ClassicDesktopStyleApplicationLifetimeExtensions.StartWithClassicDesktopLifetime(builder, args);
+        var builder = Av.AppBuilderDesktopExtensions.UsePlatformDetect(Av.AppBuilder.Configure<App>());
+        Av.ClassicDesktopStyleApplicationLifetimeExtensions.StartWithClassicDesktopLifetime(builder, args);
     }
 }
