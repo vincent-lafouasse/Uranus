@@ -1,8 +1,13 @@
-using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Layout;
-using Avalonia.Themes.Fluent;
+using Application = Avalonia.Application;
+using AppBuilder = Avalonia.AppBuilder;
+using AppBuilderDesktopExtensions = Avalonia.AppBuilderDesktopExtensions;
+using ClassicDesktopStyleApplicationLifetimeExtensions = Avalonia.ClassicDesktopStyleApplicationLifetimeExtensions;
+using IClassicDesktopStyleApplicationLifetime = Avalonia.Controls.ApplicationLifetimes.IClassicDesktopStyleApplicationLifetime;
+using Window = Avalonia.Controls.Window;
+using TextBlock = Avalonia.Controls.TextBlock;
+using HorizontalAlignment = Avalonia.Layout.HorizontalAlignment;
+using VerticalAlignment = Avalonia.Layout.VerticalAlignment;
+using FluentTheme = Avalonia.Themes.Fluent.FluentTheme;
 
 namespace Uranus;
 
@@ -34,8 +39,9 @@ class App : Application
 
 class Program
 {
-    static void Main(string[] args) =>
-        AppBuilder.Configure<App>()
-            .UsePlatformDetect()
-            .StartWithClassicDesktopLifetime(args);
+    static void Main(string[] args)
+    {
+        var builder = AppBuilderDesktopExtensions.UsePlatformDetect(AppBuilder.Configure<App>());
+        ClassicDesktopStyleApplicationLifetimeExtensions.StartWithClassicDesktopLifetime(builder, args);
+    }
 }
